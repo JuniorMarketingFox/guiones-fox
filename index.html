@@ -1151,7 +1151,7 @@ musica:''}
 // ═══════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════
-let data = loadData();
+let data = [];
 let activeTab = 'all';
 let activeFilters = {};
 let currentDetailId = null;
@@ -1162,16 +1162,24 @@ let tpPos = 0;
 let tpSpeed = 3;
 let tpMode = 'full';
 
-function loadData(){
+const DB_URL = 'https://fox-guiones-default-rtdb.firebaseio.com/guiones.json';
+
+async function loadFromDB(){
   try{
-    const saved = localStorage.getItem('fox_guiones_v2');
-    if(saved) return JSON.parse(saved);
+    const res = await fetch(DB_URL);
+    const saved = await res.json();
+    if(Array.isArray(saved)) return saved;
+    if(saved && typeof saved==='object') return Object.values(saved);
   }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  return null;
 }
 
 function saveData(){
-  localStorage.setItem('fox_guiones_v2', JSON.stringify(data));
+  fetch(DB_URL,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).catch(e=>console.error('Error al guardar:',e));
   showSavedMsg();
 }
 
@@ -1596,7 +1604,12 @@ document.getElementById('filterChips').addEventListener('click', e=>{
 // ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
-renderAll();
+(async()=>{
+  document.getElementById('mainContent').innerHTML='<div class="empty"><div class="empty-icon">⏳</div><h3>Cargando guiones...</h3></div>';
+  const loaded = await loadFromDB();
+  data = loaded || JSON.parse(JSON.stringify(DEFAULT_DATA));
+  renderAll();
+})();
 </script>
 </body>
 </html>
