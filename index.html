@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOX Analytics · Guiones Junio 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0F15;--surface:#161923;--surface2:#1E2230;--border:#272B3A;
+  --text:#EEEEF0;--text2:#7A7D90;--text3:#4A4D60;
+  --jessica:#10B981;--junior:#F59E0B;
+  --reel:#8B5CF6;--clip:#EC4899;--carrusel:#3B82F6;
+  --viral:#EF4444;--valor:#F59E0B;--venta:#10B981;
+  --fria:#60A5FA;--media:#A78BFA;--avanzada:#F97316;--compra:#34D399;
+  --n1:#6B7280;--n2:#3B82F6;--n3:#8B5CF6;--n4:#F59E0B;--n5:#EF4444;
+  --accent:#6366F1;--accent2:#4F46E5;
+  --radius:12px;--radius-sm:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.header-logo{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;letter-spacing:-.5px}
+.header-title{flex:1}
+.header-title h1{font-size:16px;font-weight:700;color:var(--text)}
+.header-title p{font-size:12px;color:var(--text2)}
+.btn{border:none;cursor:pointer;border-radius:var(--radius-sm);font-size:13px;font-weight:600;padding:8px 16px;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface2);color:var(--text)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-danger{background:#EF444420;color:#EF4444;border:1px solid #EF444430}
+.btn-danger:hover{background:#EF444430}
+
+/* NAV TABS */
+.nav-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto}
+.nav-tab{padding:12px 16px;font-size:13px;font-weight:600;color:var(--text2);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* TOOLBAR */
+.toolbar{padding:16px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{flex:1;min-width:200px;position:relative}
+.search-wrap input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px 8px 36px;color:var(--text);font-size:13px;outline:none}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--text3)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.stats-bar{display:flex;gap:16px;padding:0 24px 12px}
+.stat{font-size:12px;color:var(--text2)}.stat span{color:var(--text);font-weight:700}
+
+/* SEMANA HEADERS */
+.semana-block{padding:0 24px 32px}
+.semana-header{display:flex;align-items:center;gap:12px;padding:20px 0 14px;border-top:1px solid var(--border);margin-bottom:0}
+.semana-header:first-child{border-top:none}
+.semana-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2)}
+.semana-title{font-size:18px;font-weight:800;color:var(--text)}
+.semana-count{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding-bottom:12px}
+
+/* SECTION LABEL WITHIN SEMANA */
+.section-label{display:flex;align-items:center;gap:10px;margin:16px 0 8px}
+.section-label-text{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2)}
+.section-line{flex:1;height:1px;background:var(--border)}
+.jessica-section .section-label-text{color:var(--jessica)}
+.junior-section .section-label-text{color:var(--junior)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .2s;position:relative}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.15)}
+.card.jessica-card{border-left:3px solid var(--jessica)}
+.card.junior-card{border-left:3px solid var(--junior)}
+.card.urgent{border-top:2px solid #EF4444}
+.card-body{padding:14px}
+.card-top{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.badge-reel{background:#8B5CF620;color:#8B5CF6;border:1px solid #8B5CF630}
+.badge-clip{background:#EC489920;color:#EC4899;border:1px solid #EC489930}
+.badge-carrusel{background:#3B82F620;color:#3B82F6;border:1px solid #3B82F630}
+.badge-jessica{background:#10B98120;color:#10B981;border:1px solid #10B98130}
+.badge-junior{background:#F59E0B20;color:#F59E0B;border:1px solid #F59E0B30}
+.badge-viral{background:#EF444420;color:#EF4444}
+.badge-valor{background:#F59E0B20;color:#F59E0B}
+.badge-venta{background:#10B98120;color:#10B981}
+.badge-urgente{background:#EF444420;color:#EF4444;border:1px solid #EF444430}
+.badge-n1{background:#6B728020;color:#9CA3AF}
+.badge-n2{background:#3B82F620;color:#93C5FD}
+.badge-n3{background:#8B5CF620;color:#C4B5FD}
+.badge-n4{background:#F59E0B20;color:#FCD34D}
+.card-date{font-size:11px;color:var(--text3);margin-bottom:4px}
+.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:8px}
+.card-hook{font-size:12px;color:var(--text2);line-height:1.4;font-style:italic;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--border);background:var(--surface2)}
+.card-tablero{font-size:11px;color:var(--text2)}
+.card-actions{display:flex;gap:6px}
+.icon-btn{width:28px;height:28px;border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;background:transparent;color:var(--text2)}
+.icon-btn:hover{background:var(--border);color:var(--text)}
+.icon-btn.teleprompter-btn{color:var(--jessica)}
+.icon-btn.teleprompter-btn:hover{background:#10B98120}
+
+/* MODAL OVERLAY */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(4px);padding:20px;overflow-y:auto}
+.modal-overlay.active{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:760px;margin:auto;overflow:hidden}
+.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}
+.modal-header-info{flex:1}
+.modal-header h2{font-size:18px;font-weight:800;margin-bottom:6px}
+.modal-header-tags{display:flex;gap:6px;flex-wrap:wrap}
+.modal-close{width:32px;height:32px;border:none;background:var(--surface2);border-radius:8px;cursor:pointer;color:var(--text2);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-close:hover{color:var(--text);background:var(--border)}
+.modal-body{padding:20px 24px}
+.field{margin-bottom:16px}
+.field-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.field-value{font-size:14px;color:var(--text);line-height:1.6;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px}
+.field-value.guion{font-family:'SF Mono','Fira Code',monospace;font-size:13px;white-space:pre-wrap;max-height:320px;overflow-y:auto;line-height:1.7}
+.field textarea{width:100%;background:var(--surface2);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:13px;font-family:'SF Mono','Fira Code',monospace;line-height:1.7;resize:vertical;outline:none;white-space:pre-wrap}
+.field textarea:focus{border-color:var(--accent)}
+.field-link{color:#60A5FA;font-size:13px;text-decoration:none}
+.field-link:hover{text-decoration:underline}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.modal-footer .spacer{flex:1}
+.music-input{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 12px;color:var(--text);font-size:13px;outline:none;width:100%;margin-top:4px}
+.music-input:focus{border-color:var(--accent)}
+.saved-msg{font-size:12px;color:var(--jessica);display:none}
+.saved-msg.show{display:block}
+
+/* TELEPROMPTER */
+.tp-overlay{display:none;position:fixed;inset:0;background:#000;z-index:300;flex-direction:column}
+.tp-overlay.active{display:flex}
+.tp-controls{background:rgba(0,0,0,.9);border-bottom:1px solid #222;padding:12px 20px;display:flex;align-items:center;gap:16px;z-index:2;flex-shrink:0}
+.tp-btn{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s}
+.tp-btn:hover{background:#2a2a2a}
+.tp-btn.play-btn{background:var(--jessica);border-color:var(--jessica);min-width:90px}
+.tp-btn.play-btn:hover{background:#0DA271}
+.tp-back{background:transparent;border:1px solid #333;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;transition:all .15s}
+.tp-back:hover{color:#fff;border-color:#555}
+.tp-title{flex:1;font-size:13px;color:#888;text-align:center}
+.speed-wrap{display:flex;align-items:center;gap:8px}
+.speed-wrap label{font-size:11px;color:#666;white-space:nowrap}
+.speed-wrap input[type=range]{width:100px;accent-color:var(--jessica)}
+.speed-val{font-size:12px;color:var(--jessica);min-width:16px;text-align:center}
+.tp-device-toggle{display:flex;gap:4px}
+.tp-device-btn{background:#1a1a1a;border:1px solid #333;color:#666;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:11px;transition:all .15s}
+.tp-device-btn.active{background:#2a2a2a;color:#fff;border-color:#555}
+.tp-body{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+/* Fullscreen mode */
+.tp-body.mode-full .tp-content-wrap{width:100%;max-width:800px;height:100%;overflow:hidden;position:relative}
+/* iPad mode */
+.tp-body.mode-ipad .tp-device-frame{width:320px;height:480px;border:8px solid #333;border-radius:28px;background:#000;overflow:hidden;box-shadow:0 0 0 2px #444,0 30px 80px rgba(0,0,0,.8);position:relative}
+.tp-body.mode-ipad .tp-device-frame::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:#222;border-radius:4px;z-index:1}
+.tp-body.mode-ipad .tp-content-wrap{position:absolute;inset:24px 0 0;overflow:hidden}
+/* Laptop mode */
+.tp-body.mode-laptop .tp-device-outer{position:relative}
+.tp-body.mode-laptop .tp-device-screen{width:580px;height:380px;border:6px solid #2a2a2a;border-radius:12px 12px 0 0;background:#000;overflow:hidden;box-shadow:0 0 0 1px #444}
+.tp-body.mode-laptop .tp-device-base{width:640px;height:20px;background:#2a2a2a;border-radius:0 0 8px 8px;margin-top:-1px}
+.tp-body.mode-laptop .tp-device-base::after{content:'';display:block;width:120px;height:8px;background:#1a1a1a;border-radius:0 0 6px 6px;margin:0 auto}
+.tp-body.mode-laptop .tp-content-wrap{position:absolute;inset:6px 6px 0;overflow:hidden}
+/* CONTENT inside teleprompter */
+.tp-scroller{height:100%;overflow:hidden;position:relative}
+.tp-text{padding:40px 32px 200px;font-size:32px;font-weight:600;line-height:1.9;color:#fff;white-space:pre-wrap;will-change:transform}
+.tp-body.mode-ipad .tp-text{font-size:18px;padding:20px 16px 120px;line-height:1.8}
+.tp-body.mode-laptop .tp-text{font-size:24px;padding:30px 28px 200px;line-height:1.8}
+.tp-text .nota{color:#555;font-size:.7em;font-style:italic}
+.tp-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--jessica);transition:width .1s;z-index:3}
+/* Line highlight overlay */
+.tp-scroller::before{content:'';position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent);z-index:1;pointer-events:none}
+.tp-scroller::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,rgba(0,0,0,.9),transparent);z-index:1;pointer-events:none}
+
+/* ADD MODAL */
+.add-modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;margin:auto;padding:24px;overflow:hidden}
+.add-modal h3{font-size:16px;font-weight:800;margin-bottom:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-field{display:flex;flex-direction:column;gap:4px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text2)}
+.form-field input,.form-field select,.form-field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text);font-size:13px;outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--accent)}
+.form-field select option{background:var(--surface)}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:60px 20px;color:var(--text2)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#3A3D50}
+
+/* UTILS */
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">FOX</div>
+  <div class="header-title">
+    <h1>Guiones · Junio 2026</h1>
+    <p>21 piezas · 3 semanas · Lanzamiento 2 junio</p>
+  </div>
+  <button class="btn btn-ghost btn-sm" onclick="exportData()">⬇ Exportar</button>
+  <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Añadir pieza</button>
+</header>
+
+<!-- NAVIGATION -->
+<nav class="nav-wrap" id="navTabs">
+  <button class="nav-tab active" data-tab="all">Todas (21)</button>
+  <button class="nav-tab" data-tab="jessica">🎬 Jessica (8)</button>
+  <button class="nav-tab" data-tab="junior">🎨 Junior (13)</button>
+  <button class="nav-tab" data-tab="s1">Semana 1</button>
+  <button class="nav-tab" data-tab="s2">Semana 2</button>
+  <button class="nav-tab" data-tab="s3">Semana 3</button>
+</nav>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscar por título, gancho, idea..." oninput="renderAll()">
+  </div>
+  <div class="filters" id="filterChips">
+    <button class="chip" data-filter="tipo" data-val="Reel">Reels</button>
+    <button class="chip" data-filter="tipo" data-val="Clip">Clips</button>
+    <button class="chip" data-filter="tipo" data-val="Carrusel">Carruseles</button>
+    <button class="chip" data-filter="proposito" data-val="Viral">🔥 Viral</button>
+    <button class="chip" data-filter="proposito" data-val="Valor">💡 Valor</button>
+    <button class="chip" data-filter="proposito" data-val="Venta">💰 Venta</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">Jessica <span id="stat-jessica">8</span></div>
+  <div class="stat">Junior <span id="stat-junior">13</span></div>
+  <div class="stat">Reels <span id="stat-reel">8</span></div>
+  <div class="stat">Clips <span id="stat-clip">6</span></div>
+  <div class="stat">Carruseles <span id="stat-carrusel">7</span></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="mainContent" style="padding:0 24px 40px"></main>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal" onclick="closeDetailIfOutside(event)">
+  <div class="modal" id="detailModalInner">
+    <div class="modal-header">
+      <div class="modal-header-info">
+        <h2 id="dTitle"></h2>
+        <div class="modal-header-tags" id="dTags"></div>
+      </div>
+      <button class="modal-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="modal-body" id="dBody"></div>
+    <div class="modal-footer" id="dFooter"></div>
+  </div>
+</div>
+
+<!-- TELEPROMPTER -->
+<div class="tp-overlay" id="tpOverlay">
+  <div class="tp-controls">
+    <button class="tp-back" onclick="closeTp()">← Salir</button>
+    <div class="tp-title" id="tpTitle"></div>
+    <div class="speed-wrap">
+      <label>Velocidad</label>
+      <input type="range" id="tpSpeed" min="1" max="10" value="3" oninput="updateSpeed()">
+      <span class="speed-val" id="tpSpeedVal">3</span>
+    </div>
+    <div class="tp-device-toggle">
+      <button class="tp-device-btn active" data-mode="full" onclick="setTpMode('full',this)">Pantalla</button>
+      <button class="tp-device-btn" data-mode="ipad" onclick="setTpMode('ipad',this)">iPad</button>
+      <button class="tp-device-btn" data-mode="laptop" onclick="setTpMode('laptop',this)">Laptop</button>
+    </div>
+    <button class="tp-btn play-btn" id="tpPlayBtn" onclick="toggleTp()">▶ Iniciar</button>
+  </div>
+  <div class="tp-body mode-full" id="tpBody">
+    <!-- content injected by JS -->
+  </div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal-overlay" id="addModal" onclick="closeAddIfOutside(event)">
+  <div class="add-modal">
+    <h3>➕ Nueva pieza de contenido</h3>
+    <div class="form-grid">
+      <div class="form-field"><label>Semana</label><select id="fSemana"><option value="1">Semana 1</option><option value="2">Semana 2</option><option value="3">Semana 3</option></select></div>
+      <div class="form-field"><label>Día / Fecha</label><input type="text" id="fDia" placeholder="LUN 29 Jun"></div>
+      <div class="form-field"><label>Tipo</label><select id="fTipo"><option>Reel</option><option>Clip</option><option>Carrusel</option></select></div>
+      <div class="form-field"><label>Quién produce</label><select id="fQuien"><option>Jessica</option><option>Junior</option></select></div>
+      <div class="form-field full"><label>Título / Idea</label><input type="text" id="fIdea" placeholder="#043 Título del video..."></div>
+      <div class="form-field"><label>Tablero</label><select id="fTablero"><option>Audiencia Fría</option><option>Audiencia Media</option><option>Audiencia Avanzada</option><option>Listo para Comprar</option></select></div>
+      <div class="form-field"><label>Propósito</label><select id="fProposito"><option>Viral</option><option>Valor</option><option>Venta</option></select></div>
+      <div class="form-field"><label>Batería</label><select id="fBateria"><option>N1</option><option>N2</option><option>N3</option><option>N4</option><option>N5</option></select></div>
+      <div class="form-field"><label>Duración</label><input type="text" id="fDuracion" placeholder="~40 seg"></div>
+      <div class="form-field full"><label>Gancho Textual</label><input type="text" id="fGanchoT" placeholder='"Primera frase del video..."'></div>
+      <div class="form-field full"><label>Guion</label><textarea id="fGuion" rows="6" placeholder="Escribe el guion aquí..."></textarea></div>
+      <div class="form-field full"><label>CTA</label><input type="text" id="fCta" placeholder="Síguenos si te suena familiar"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeAdd()">Cancelar</button>
+      <button class="btn btn-primary" onclick="addPiece()">Añadir pieza</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const DEFAULT_DATA = [
+
+// ── SEMANA 1 ──────────────────────────────────────────────
+
+{id:'S1-JK1',semana:1,dia:'LUN 2 Jun',tipo:'Carrusel',quien:'Junior',urgente:true,
+idea:'#007 — Emprendedor vs. Empresario. ¿En cuál estás tú?',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N3',formato:'Carrusel Versus · 6 slides',duracion:'—',
+ganchoVisual:'Cover: dos columnas visualmente contrastadas. Izquierda oscura (autónomo agotado), derecha clara (empresario con sistemas). Tipografía grande y limpia.',
+ganchoTextual:'"El autónomo trabaja sin parar. El empresario tiene sistemas que trabajan por él. ¿En cuál estás tú?"',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"El autónomo trabaja sin parar.
+El empresario tiene sistemas que trabajan por él.
+¿En cuál estás tú?"
+
+SLIDE 2 — AUTÓNOMO / EMPRENDEDOR
+✗  Todo pasa por ti
+✗  Si te enfermas, la empresa para
+✗  No puedes tomarte vacaciones sin miedo
+✗  Sabes hacer todo... pero nadie más puede hacerlo
+
+SLIDE 3 — EMPRESARIO CON SISTEMAS
+✓  Sus procesos funcionan aunque no esté
+✓  El equipo sabe qué hacer sin preguntarle
+✓  Puede salir de vacaciones y el negocio sigue
+✓  Toma decisiones con datos, no con Excel
+
+SLIDE 4 — LA CLAVE
+No es el tamaño de la empresa.
+Es si tienes sistemas
+o todo depende de ti.
+
+SLIDE 5 — POR QUÉ HABLA FOX DE ESTO
+En FOX Analytics ayudamos a dueños de PYME
+a pasar del primer esquema al segundo.
+No desarrollamos software.
+Resolvemos la lógica de tu negocio.
+
+SLIDE 6 — CTA
+¿Emprendedor o Empresario?
+Comenta cuál eres 👇`,
+cta:'¿Emprendedor o Empresario? Comenta cuál eres 👇',
+notaJunior:'⚠️ LANZAMIENTO — publicar el lunes 2 de junio. Diseño con dos columnas contrastadas. Paleta limpia. Tipografía grande. El hook del slide 1 debe conectar en el copy por qué FOX habla de esto.',
+musica:''},
+
+{id:'S1-JC1',semana:1,dia:'MAR 3 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#032 — Te hicieron creer que automatizar es caro. Falso.',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N1',formato:'Clip · Rompe el Mito · Texto en pantalla',duracion:'~12 seg',
+ganchoVisual:'B-roll de oficina moderna o espacio de trabajo. Texto grande centrado sobre imagen desenfocada o fondo oscuro con gradiente.',
+ganchoTextual:'"Me dijeron que automatizar era caro y complicado."',
+referencia:'Original',
+guion:`FRAME 1 (0–2s)
+"Me dijeron que automatizar
+era caro y complicado."
+
+FRAME 2 (2–3s)
+"Qué mentira."
+
+FRAME 3 (3–7s)
+"El coste de NO automatizar es mayor:
+horas perdidas, errores,
+personal de más."
+
+FRAME 4 (7–10s)
+"Nadie te lo explicó
+en términos de tu negocio.
+Eso sí cambia todo."
+
+FRAME 5 (10–12s) — CTA
+"Guarda si a ti también te lo dijeron 👇"`,
+cta:'Guarda si a ti también te lo dijeron 👇',
+notaJunior:'Clip faceless 100%. Solo texto en pantalla + música. Fondo: b-roll de oficina o workspace, desenfocado. Texto: blanco, tipografía bold, letra grande. Ritmo: frames cortos, con peso. CapCut o Premiere.',
+musica:''},
+
+{id:'S1-JR1',semana:1,dia:'JUE 5 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#005 — El cuello de botella eres tú',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N2',formato:'Reel Narrador · Talking head · 1 toma',duracion:'~40 seg',
+ganchoVisual:'Jessica mirando directo a cámara, seria pero cercana. Fondo limpio, buena luz. Puede estar de pie o sentada. Sin adornos.',
+ganchoTextual:'"El cuello de botella eres tú."',
+referencia:'https://www.tiktok.com/@estratega_sergio_hermida/video/7638649267070192914',
+guion:`[Texto en pantalla: "El cuello de botella eres tú."]
+
+Si eres el dueño de tu empresa
+y eres el más ocupado de todos...
+
+el cuello de botella eres tú.
+
+Y no lo vas a resolver
+trabajando más horas.
+
+Cuando todo pasa por ti —
+las decisiones, las aprobaciones, los problemas —
+la empresa tiene un techo:
+lo que tú puedes aguantar en un día.
+
+He visto dueños
+que no pueden tomarse vacaciones.
+Que reciben mensajes a las once de la noche.
+Que hacen de gerente, vendedor,
+técnico y contable al mismo tiempo.
+
+Eso no es éxito. Es una trampa.
+
+La solución no es trabajar más.
+Es que la información de tu negocio
+deje de vivir en tu cabeza
+y empiece a vivir en un sistema.
+
+Síguenos si eso te suena familiar.`,
+cta:'Síguenos si eso te suena familiar',
+notaJessica:'Habla pausado, con peso en cada punto. El "Eso no es éxito. Es una trampa." — pausa antes, baja la voz un poco. Habla como si le explicaras esto a un amigo dueño de empresa. 1 toma, nada técnico.',
+musica:'🎵 Música: _______________'},
+
+{id:'S1-JR2',semana:1,dia:'VIE 6 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#018 — ERP genérico vs. Software a medida. La diferencia real.',
+tablero:'Audiencia Media',proposito:'Valor',bateria:'N4',formato:'Reel Versus · Split screen o talking head comparativo',duracion:'~55 seg',
+ganchoVisual:'Jessica con fondo limpio, sonrisa directa. Puede usar las manos para separar las dos opciones — izquierda ERP, derecha medida.',
+ganchoTextual:'"Holded y Odoo son buenos productos. Pero no están diseñados para tu proceso específico."',
+referencia:'Original',
+guion:`[Texto en pantalla: "ERP genérico vs. Software a medida — la diferencia real."]
+
+Holded, Odoo, Sage...
+son buenos productos.
+No los estoy criticando.
+
+Pero tampoco están diseñados
+para tu proceso específico.
+
+Aquí está la diferencia real.
+
+El ERP genérico es rápido de implementar,
+cuesta menos al principio,
+y funciona bien si tu proceso es estándar.
+
+¿El problema?
+Que casi ninguna empresa mediana
+tiene un proceso estándar.
+Al final acaban exportando a Excel de todas formas.
+
+El software a medida
+tarda un poco más al inicio —
+pero está diseñado exactamente
+para cómo trabaja tu empresa.
+El equipo lo adopta más rápido.
+Y no pagas por cosas que nunca vas a usar.
+
+¿Cuándo conviene cada uno?
+Si tu proceso es estándar — ERP genérico.
+Si ya lo intentaste con uno genérico
+y no te funcionó — software a medida.
+
+Comenta DIFERENCIA
+y te cuento cuál te conviene según tu sector.`,
+cta:'Comenta DIFERENCIA y te cuento cuál te conviene',
+notaJessica:'Este es explicativo. Usa las manos para separar las dos opciones. Tono informativo, no técnico — como si le recomendaras algo a un amigo. La pregunta final "¿Cuándo conviene cada uno?" — baja el ritmo, habla más despacio.',
+musica:'🎵 Música: _______________'},
+
+{id:'S1-JC2',semana:1,dia:'SÁB 7 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#009 — Las PYMEs que automatizan ahorran 10 horas por semana',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N1',formato:'Clip La Fórmula · B-roll + texto',duracion:'~12 seg',
+ganchoVisual:'B-roll de alguien trabajando en laptop o reloj/timer. Texto grande con el dato principal.',
+ganchoTextual:'"El 55% de las PYMEs que automatizan ahorran 10 horas por semana."',
+referencia:'Original',
+guion:`FRAME 1 (0–3s)
+"El 55% de las PYMEs que automatizan
+ahorran mínimo 10 horas por semana."
+
+FRAME 2 (3–5s)
+"10h/semana = 40h al mes"
+
+FRAME 3 (5–7s)
+"40h/mes = 480h al año"
+
+FRAME 4 (7–9s)
+"480 horas = 60 días laborables"
+
+FRAME 5 (9–11s)
+"Eso es lo que pierdes
+si no automatizas."
+
+FRAME 6 (11–12s) — CTA
+"¿Cuántas estás perdiendo tú? →"`,
+cta:'¿Cuántas estás perdiendo tú? → Sigue la cuenta',
+notaJunior:'Clip faceless. Texto con animación rápida, un dato por frame. Música: energética, dinámica. El ritmo es clave aquí — cada frame corto, con punch.',
+musica:''},
+
+{id:'S1-JK2',semana:1,dia:'MIÉ 4 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#012 — 3 señales de que tus procesos manuales te frenan',
+tablero:'Audiencia Fría',proposito:'Valor',bateria:'N3',formato:'Carrusel Errores · 6 slides',duracion:'—',
+ganchoVisual:'Cover con el número 3 grande + título. Diseño limpio, fondo oscuro, tipografía bold.',
+ganchoTextual:'"3 señales de que tus procesos manuales te están frenando — aunque el negocio vaya bien."',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"3 señales de que tus procesos manuales
+te están frenando —
+aunque el negocio vaya bien."
+
+SLIDE 2 — SEÑAL 1
+Cuando [nombre] falta, el proceso para.
+Si una sola persona sabe cómo hacer
+algo importante en tu empresa...
+ese conocimiento está atrapado en ella,
+no en un sistema.
+
+SLIDE 3 — SEÑAL 2
+Los errores se descubren demasiado tarde.
+Ya facturaste. Ya entregaste.
+Ya compraste de más.
+El error aparece cuando ya no hay vuelta atrás.
+
+SLIDE 4 — SEÑAL 3
+Todo tiene que pasar por ti para aprobarse.
+Si no puedes delegar porque nadie
+tiene la información que tú tienes...
+el cuello de botella eres tú.
+
+SLIDE 5 — CIERRE
+Estas señales no son de mala gestión.
+Son de un negocio que creció
+más rápido que sus sistemas.
+Hay solución.
+
+SLIDE 6 — CTA
+¿Te identificas con alguna?
+Guarda este carrusel y compártelo con tu equipo.`,
+cta:'Guarda esto y compártelo con tu equipo',
+notaJunior:'Diseño limpio, 1 señal por slide. Usa un ícono o número visual para cada señal. Fondo oscuro con texto grande. El slide 5 puede tener un tono más cálido.',
+musica:''},
+
+{id:'S1-JK3',semana:1,dia:'DOM 8 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#033 — VAO Barcelona: de 200 contenedores en Excel a GPS en tiempo real',
+tablero:'Listo para Comprar',proposito:'Venta',bateria:'N3',formato:'Carrusel Antes/Después · 6 slides',duracion:'—',
+ganchoVisual:'Cover con foto de contenedores o logística. Antes/después visual fuerte. Cita del cliente destacada.',
+ganchoTextual:'"8 años con 200 contenedores en Excel. En 3 semanas lo cambiamos todo."',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"VAO llevaba 8 años con
+200 contenedores en Excel.
+En 3 semanas lo cambiamos todo.
+'Me facilitaste la vida.'"
+
+SLIDE 2 — EL ANTES
+200 contenedores gestionados a mano en Excel.
+Sin trazabilidad en tiempo real.
+Cada movimiento: una llamada,
+un mensaje, una actualización manual.
+8 años así.
+
+SLIDE 3 — LO QUE HICIMOS
+→ Reunión de diagnóstico: entendemos
+   la lógica del negocio.
+→ Prototipo funcional sin costo.
+→ Implementación completa en 3 semanas.
+
+SLIDE 4 — EL DESPUÉS
+ERP con GPS en tiempo real.
+Cualquier persona del equipo puede ver
+dónde está cada contenedor.
+Sin llamadas. Sin Excel. Sin errores.
+
+SLIDE 5 — LA CITA
+"Me facilitaste la vida."
+— VAO, empresa de contenedores, Barcelona
+
+SLIDE 6 — CTA
+¿Tu empresa tiene un proceso así?
+Diagnóstico gratuito → Link en bio`,
+cta:'Diagnóstico gratuito → Link en bio',
+notaJunior:'⚠️ Confirmar datos exactos con Andrés antes de publicar. Cita real del cliente — incluirla tal cual. Diseño tipo case study, limpio y profesional.',
+musica:''},
+
+// ── SEMANA 2 ──────────────────────────────────────────────
+
+{id:'S2-JR1',semana:2,dia:'LUN 9 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#003 — Verifactu: hasta 50.000€ de multa. Lo que nadie te explica.',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N4',formato:'Reel Factos Rápidos · Datos en pantalla · Energético',duracion:'~45 seg',
+ganchoVisual:'Jessica directa a cámara, tono de alerta real. Fondo limpio. Energía alta pero no alarmista — tipo "te lo cuento porque importa".',
+ganchoTextual:'"A partir de enero de 2027, todas las sociedades en España tienen que pasar sus facturas por Verifactu."',
+referencia:'https://www.instagram.com/reel/DOeNk8tE4rS',
+guion:`[Texto en pantalla: "Verifactu. Enero 2027. 50.000€ de multa."]
+
+A partir de enero de 2027,
+todas las sociedades en España
+tienen que pasar sus facturas por Verifactu.
+
+Da igual tu sector.
+
+¿Qué es Verifactu?
+Un sistema que valida cada factura
+que emites en tiempo real con Hacienda.
+
+¿Qué pasa si no cumples?
+Sanción entre mil y cincuenta mil euros.
+
+No es opcional. No hay excepciones.
+
+Y lo que muchas empresas no saben todavía —
+es que el software que usan ahora
+puede que no esté certificado para cumplirlo.
+
+Si no lo has revisado todavía,
+ahora es el momento.
+
+Síguenos —
+esta semana lo explicamos todo en detalle.`,
+cta:'Síguenos para la guía completa de Verifactu',
+notaJessica:'Habla rápido en los datos (fechas, multas) y desacelera en "¿Qué pasa si no cumples?". Tono de alerta útil, como quien avisa a un amigo. No necesitas explicar qué es Hacienda — el perfil ya lo sabe.',
+musica:'🎵 Música: _______________'},
+
+{id:'S2-JC1',semana:2,dia:'MAR 10 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#006 — No automatizar = engordar la nómina',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N1',formato:'Clip Provocador · Texto en pantalla',duracion:'~12 seg',
+ganchoVisual:'B-roll de personas en oficina o escritorios. Texto provocador, grande, blanco sobre fondo oscuro.',
+ganchoTextual:'"Cada proceso manual que tienes = una persona que lo hace."',
+referencia:'Original',
+guion:`FRAME 1 (0–2s)
+"Cada proceso manual que tienes
+= una persona que lo hace."
+
+FRAME 2 (2–4s)
+"Más procesos manuales
+= más personal."
+
+FRAME 3 (4–7s)
+"Más personal sin crecer de verdad
+= nómina inflada."
+
+FRAME 4 (7–10s)
+"Automatizar no es quitar personas.
+Es liberarlas para lo importante."
+
+FRAME 5 (10–12s) — CTA
+"¿Tiene sentido?
+Comenta SÍ o NO"`,
+cta:'¿Tiene sentido? Comenta SÍ o NO',
+notaJunior:'Clip faceless provocador. Música con punch. La ecuación visual (=) puede aparecer con animación. Texto grande, impacto inmediato. CapCut funciona bien para esto.',
+musica:''},
+
+{id:'S2-JK1',semana:2,dia:'MIÉ 11 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#016 — Verifactu vs. Factura Electrónica. La diferencia que nadie explica.',
+tablero:'Audiencia Media',proposito:'Valor',bateria:'N3',formato:'Carrusel Educativo · 6 slides',duracion:'—',
+ganchoVisual:'Cover con las dos palabras en dos columnas visuales. Error común destacado en rojo.',
+ganchoTextual:'"Verifactu y factura electrónica NO son lo mismo — y confundirlos te puede costar hasta 50.000€."',
+referencia:'https://www.instagram.com/reel/DG3ErMjvZ2u/',
+guion:`SLIDE 1 — GANCHO (COVER)
+"Verifactu y factura electrónica
+NO son lo mismo.
+Y confundirlos te puede costar
+hasta 50.000€."
+
+SLIDE 2 — QUÉ ES VERIFACTU
+Verifactu = cómo tu software
+GENERA y REGISTRA cada factura.
+Tu software valida cada factura
+con Hacienda en tiempo real.
+✅ Obligatorio para todas las sociedades
+desde enero 2027.
+
+SLIDE 3 — QUÉ ES FACTURA ELECTRÓNICA
+Factura Electrónica B2B (Crea y Crece)
+= cómo ENVÍAS y RECIBES
+facturas entre empresas.
+Uso de formatos estructurados (XML/PDF-A).
+📅 Entrada en vigor progresiva 2025-2026.
+
+SLIDE 4 — LA DIFERENCIA CLAVE
+Verifactu → cómo tu software valida
+con Hacienda.
+Factura Electrónica → cómo mandas
+y recibes documentos.
+Son dos obligaciones DISTINTAS.
+Puedes incumplir una y cumplir la otra.
+
+SLIDE 5 — QUÉ TIENES QUE HACER
+✓ Verifica que tu software esté
+  certificado para ambas.
+✓ Si usas Excel o sistema casero:
+  tienes un problema urgente.
+✓ Habla con tu gestor sobre
+  qué tienes que cambiar.
+
+SLIDE 6 — CTA
+¿Dudas sobre tu software actual?
+Cuéntanoslo en comentarios.`,
+cta:'¿Dudas sobre tu software? Cuéntanoslo en comentarios',
+notaJunior:'Diseño educativo limpio. Dos colores para distinguir Verifactu vs Factura Electrónica. Slide 4 puede usar iconos o flechas para la distinción clave.',
+musica:''},
+
+{id:'S2-JR2',semana:2,dia:'JUE 12 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#010 — El día entero perdido esperando entre departamentos',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N2',formato:'Reel B-roll + Voz · Storytelling',duracion:'~45 seg',
+ganchoVisual:'Jessica pensativa, como recordando algo. Puede sentarse o apoyarse. Fondo de oficina o desenfocado. Tono cercano.',
+ganchoTextual:'"Un día entero perdido. Y nadie hizo nada malo."',
+referencia:'Original',
+guion:`[Texto en pantalla: "Un día entero perdido. Y nadie hizo nada malo."]
+
+Conozco empresas
+donde esto pasa todos los días.
+
+Compras no puede liberar la orden
+porque contabilidad no ha cargado el anticipo.
+Contabilidad espera que el responsable lo apruebe.
+El responsable está en una reunión.
+El proveedor llama por cuarta vez.
+
+Y el día se fue.
+
+[pausa]
+
+Nadie hizo nada mal.
+Nadie es el culpable.
+
+El problema es que cada departamento
+tiene su propia hoja, su propio sistema,
+su propia versión de lo que está pasando.
+
+Cuando centralizas la información,
+esto deja de existir.
+La orden se libera sola
+cuando el anticipo se registra.
+Sin llamadas. Sin esperas. Sin días perdidos.
+
+¿Te ha pasado algo así en tu empresa?
+Cuéntamelo en los comentarios.`,
+cta:'¿Te ha pasado algo así? Cuéntamelo en comentarios',
+notaJessica:'Este es el más natural y cercano. Cuéntalo como si fuera una historia real que te pasó o que viste. La pausa después de "Y el día se fue." es el momento más fuerte — hazla real, mínimo 2 segundos. No hace falta energía alta aquí, mejor cercanía.',
+musica:'🎵 Música: _______________'},
+
+{id:'S2-JR3',semana:2,dia:'VIE 13 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#001 — ¿Tu empresa está creciendo o perdiendo el control?',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N4',formato:'Reel Síntomas · Lista visual',duracion:'~40 seg',
+ganchoVisual:'Jessica directa, pregunta inmediata. Fondo limpio. Energía media-alta. La lista de síntomas puede aparecer como texto en pantalla mientras habla.',
+ganchoTextual:'"¿Tu empresa está creciendo... o perdiendo el control?"',
+referencia:'https://www.tiktok.com/@tcgthecloudgroup/video/7633843665600826631',
+guion:`[Texto en pantalla: "¿Tu empresa está creciendo... o perdiendo el control?"]
+
+¿Tu empresa está creciendo...
+o perdiendo el control?
+
+Más Excel. Más WhatsApp. Más procesos.
+Menos claridad.
+
+Dime cuántas de estas señales reconoces.
+
+Las decisiones siempre las toma la misma persona.
+Cuando alguien falta, el proceso para.
+Cada semana corriges errores
+que se podrían haber evitado.
+Los datos de tu empresa viven
+en hojas distintas de personas distintas.
+Para saber cómo va el negocio,
+tienes que preguntar a tres personas.
+
+[pausa]
+
+Si te identificas con tres o más —
+
+no es un problema de gestión.
+Es un problema de sistema.
+
+Y tiene solución.
+
+Síguenos.`,
+cta:'Síguenos si te identificas con esto',
+notaJessica:'La lista de señales se puede decir con ritmo, contando con los dedos si quieres. La frase "si te identificas con tres o más" — pausa antes. El "Y tiene solución." — baja la energía, más íntimo. Contraste intencional con el ritmo de la lista.',
+musica:'🎵 Música: _______________'},
+
+{id:'S2-JC2',semana:2,dia:'SÁB 14 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#022 — El 40% de los proyectos de ERP fracasa. No es culpa tuya.',
+tablero:'Audiencia Media',proposito:'Valor',bateria:'N1',formato:'Clip Deja de Hacer Esto · Texto en pantalla',duracion:'~12 seg',
+ganchoVisual:'Fondo oscuro profesional. Texto grande con el dato en el primer frame. Sin cara.',
+ganchoTextual:'"El 40% de los proyectos de ERP fracasa."',
+referencia:'Original',
+guion:`FRAME 1 (0–2s)
+"El 40% de los proyectos de ERP fracasa."
+
+FRAME 2 (2–3s)
+"No por el software."
+
+FRAME 3 (3–7s)
+"Sino porque nadie entendió
+el proceso del negocio
+antes de implementar."
+
+FRAME 4 (7–10s)
+"Si el software no encaja
+con tu forma de trabajar,
+tu equipo no lo va a usar."
+
+FRAME 5 (10–12s) — CTA
+"Guarda esto antes de
+contratar cualquier software."`,
+cta:'Guarda esto antes de contratar cualquier software',
+notaJunior:'Clip faceless con peso. Fuente grande, texto blanco sobre fondo oscuro. Frame 2 "No por el software." — puede aparecer en rojo o color contrastado para impacto visual.',
+musica:''},
+
+{id:'S2-JK2',semana:2,dia:'DOM 15 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#035 — El developer que construyó algo que el cliente no pidió',
+tablero:'Listo para Comprar',proposito:'Venta',bateria:'N3',formato:'Carrusel Storytelling · 6 slides',duracion:'—',
+ganchoVisual:'Cover con historia: foto de pantalla de código o workspace técnico, con frase de gancho sobre imagen. Formato narrativo.',
+ganchoTextual:'"Gabriel construyó algo que el cliente no pidió. Porque entendió el negocio tan bien que vio el problema antes que ellos."',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"Nuestro developer construyó algo
+que el cliente no pidió.
+Y fue lo que más agradeció."
+
+SLIDE 2 — EL CONTEXTO
+Estábamos trabajando con un cliente en España.
+Gabriel notó que cada semana
+el equipo hacía una tarea manual
+que se podía automatizar.
+Nadie se lo pidió. Él simplemente lo vio.
+
+SLIDE 3 — LO QUE CONSTRUYÓ
+Un validador automático que el cliente
+tardaba horas en hacer a mano.
+Lo desarrolló, lo probó,
+y lo presentó en la siguiente reunión.
+Reacción del cliente:
+"¿Cuándo puedo tenerlo?"
+
+SLIDE 4 — POR QUÉ ESTO NOS DEFINE
+En FOX no ejecutamos tareas.
+Entendemos negocios.
+Nuestro equipo piensa como parte
+de tu empresa, no como proveedor externo.
+
+SLIDE 5 — QUÉ SIGNIFICA PARA TI
+Cuando trabajas con FOX,
+no solo obtienes lo que pediste.
+Obtienes lo que necesitabas —
+aunque aún no supieras que lo necesitabas.
+
+SLIDE 6 — CTA
+¿Quieres un equipo que piense
+en tu negocio?
+Diagnóstico gratuito → Link en bio`,
+cta:'Diagnóstico gratuito → Link en bio',
+notaJunior:'Diseño tipo narrative/storytelling. Puede mezclar texto con foto de pantalla o íconos de código. El slide 5 es el más poderoso — dale espacio visual.',
+musica:''},
+
+// ── SEMANA 3 ──────────────────────────────────────────────
+
+{id:'S3-JR1',semana:3,dia:'LUN 16 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#023 — La IA en tu empresa no es ChatGPT',
+tablero:'Audiencia Media',proposito:'Valor',bateria:'N4',formato:'Reel Revelación · Dinámico',duracion:'~50 seg',
+ganchoVisual:'Jessica con cara de "te voy a sorprender". Puede usar contraste visual con las manos — izquierda NO, derecha SÍ.',
+ganchoTextual:'"La mayoría de empresas cree que usar inteligencia artificial es usar ChatGPT."',
+referencia:'https://www.tiktok.com/@decimaaibusinesslab/video/7644726211544894737',
+guion:`[Texto en pantalla: "La IA en tu empresa no es lo que crees."]
+
+La mayoría de empresas cree
+que usar inteligencia artificial
+es usar ChatGPT para escribir emails.
+
+Y sí, eso también es IA.
+Pero no es la que te da dinero.
+
+Mira la diferencia.
+
+Esto NO es IA en una empresa:
+escribir emails, hacer resúmenes,
+generar imágenes.
+
+Esto SÍ es IA que cambia tu empresa:
+un sistema que detecta
+cuando el stock baja del mínimo
+y genera la orden de compra automáticamente.
+Un proceso que cruza tus datos de producción con RRHH
+y te calcula los costes reales por proyecto.
+Un sistema que valida tus facturas entrantes
+y las contabiliza sin que nadie las toque.
+
+La IA que te da dinero
+no es la que escribe.
+Es la que piensa por ti.
+
+Comenta IA
+y te mando tres ejemplos reales
+de empresas españolas que ya lo tienen.`,
+cta:'Comenta IA → 3 ejemplos reales de empresas españolas',
+notaJessica:'La parte "NO / SÍ" puedes marcarla con las manos — mano izquierda para el NO, derecha para el SÍ. Voz segura y un poco "reveladora". El cierre con el lead magnet (comenta IA) — directo a cámara, cercano.',
+musica:'🎵 Música: _______________'},
+
+{id:'S3-JC1',semana:3,dia:'MAR 17 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#002 — El 42% de las PYMEs españolas no tuvo beneficios en 2025',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N1',formato:'Clip Hecho de Impacto · Dato shock',duracion:'~12 seg',
+ganchoVisual:'Dato grande en pantalla, impacto inmediato. Fondo oscuro o gráfico simple. Sin cara.',
+ganchoTextual:'"42% de las PYMEs españolas. Sin beneficios en 2025."',
+referencia:'Original',
+guion:`FRAME 1 (0–2s)
+"42% de las PYMEs españolas.
+Sin beneficios en 2025."
+
+FRAME 2 (2–4s)
+"La excusa habitual:
+el mercado, los impuestos."
+
+FRAME 3 (4–7s)
+"Lo que nadie nombra:
+procesos ineficientes,
+información dispersa."
+
+FRAME 4 (7–10s)
+"La ineficiencia interna cuesta
+más de lo que cualquier impuesto te cobra."
+
+FRAME 5 (10–12s) — CTA
+"Sígueme para ver la solución →"`,
+cta:'Sígueme para ver la solución →',
+notaJunior:'Clip dato shock. Frame 1 puede tener el "42%" muy grande, como si fuera la portada de un periódico. Música impactante, con peso.',
+musica:''},
+
+{id:'S3-JK1',semana:3,dia:'MIÉ 18 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#036+#037 — Prototipo sin costo: cómo trabaja FOX antes de que pagues un euro',
+tablero:'Audiencia Avanzada',proposito:'Venta',bateria:'N3',formato:'Carrusel Tutorial · Proceso FOX · 6 slides',duracion:'—',
+ganchoVisual:'Cover con pregunta directa "¿Cuánto cuesta?" + proceso de 3 pasos. Diseño de autoridad, limpio.',
+ganchoTextual:'"¿Cuánto cuesta un software a medida? Depende. Y lo que determina el precio es esto."',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"¿Cuánto cuesta un software a medida?
+Depende.
+Y lo que determina el precio es esto."
+
+SLIDE 2 — PASO 1
+Entendemos la lógica de tu negocio.
+Antes de escribir una sola línea de código,
+nos reunimos contigo.
+Queremos entender tus procesos,
+los cuellos de botella,
+lo que se pierde y lo que tarda.
+
+SLIDE 3 — PASO 2
+Te entregamos un prototipo funcional.
+Antes de que pagues un solo euro,
+puedes ver cómo va a funcionar tu sistema.
+Nadie más en España trabaja así.
+
+SLIDE 4 — PASO 3
+Propuesta basada en lo real.
+Solo después del prototipo
+hacemos la propuesta económica.
+El precio refleja lo que realmente
+hay que construir — no estimaciones a ciegas.
+
+SLIDE 5 — POR QUÉ IMPORTA ESTE ORDEN
+El 40% de los proyectos de software fracasa
+porque nadie entendió el negocio
+antes de empezar.
+Este orden lo cambia todo.
+
+SLIDE 6 — CTA
+Comenta PROTOTIPO
+y te explicamos el proceso paso a paso.`,
+cta:'Comenta PROTOTIPO y te explicamos el proceso',
+notaJunior:'Este es el carrusel de mayor impacto comercial. Diseño de autoridad: limpio, profesional, con los 3 pasos bien visualizados. ⚠️ Confirmar con Diego que el CTA "Comenta PROTOTIPO" esté conectado a respuesta en DM.',
+musica:''},
+
+{id:'S3-JR2',semana:3,dia:'JUE 19 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#028 — Nos llegó un cliente con Excel + Make. Lo que encontramos.',
+tablero:'Audiencia Avanzada',proposito:'Valor',bateria:'N2',formato:'Reel Storytelling · Talking head',duracion:'~50 seg',
+ganchoVisual:'Jessica pensativa, como recordando un caso real. Fondo neutro. Tono cercano, historia real.',
+ganchoTextual:'"Nos llegó un cliente con toda su operación en Excel y Make."',
+referencia:'Original',
+guion:`[Texto en pantalla: "Nos llegó un cliente con todo en Excel y Make."]
+
+Nos llegó un cliente
+con toda su operación
+montada en Excel y Make.
+
+Le preguntamos:
+¿Cuánto tiempo pierdes
+en este proceso cada semana?
+
+[pausa]
+
+Silencio.
+
+No sabía la respuesta.
+
+Y eso era exactamente el problema.
+
+Cuando el caos está normalizado,
+deja de verse como caos.
+
+Cuando lo miramos de cerca,
+ese cliente dedicaba tres días al mes
+a consolidar datos
+entre cuatro hojas distintas.
+
+Tres días. Todos los meses.
+
+Más de ciento ochenta horas al año
+haciendo algo que un sistema centralizado
+hace en segundos.
+
+Tres semanas después de trabajar con nosotros,
+esas ciento ochenta horas ya no existían.
+
+¿Tu empresa está en ese punto?
+Escríbenos directamente por DM.`,
+cta:'¿Tu empresa está en ese punto? Escríbenos en DM',
+notaJessica:'Este es el más íntimo de todos. Cuéntalo como una historia real. La pregunta "¿Cuánto tiempo pierdes?" — luego el silencio real, para de verdad unos segundos. Eso es lo más poderoso del video. No des prisa.',
+musica:'🎵 Música: _______________'},
+
+{id:'S3-JR3',semana:3,dia:'VIE 20 Jun',tipo:'Reel',quien:'Jessica',urgente:false,
+idea:'#014 — El día típico del dueño de PYME sin sistemas',
+tablero:'Audiencia Fría',proposito:'Viral',bateria:'N4',formato:'Reel Lista Visual · Descriptivo',duracion:'~50 seg',
+ganchoVisual:'Jessica directa, describiendo una escena. Texto en pantalla con las horas (8:00, 9:00...) apareciendo mientras habla. Ritmo de lista.',
+ganchoTextual:'"Este es el día típico del dueño de PYME sin sistemas. Mira si te suena familiar."',
+referencia:'Original',
+guion:`[Texto en pantalla: "El día típico del dueño de PYME. ¿Te suena?"]
+
+Este es el día típico
+del dueño de PYME sin sistemas.
+Mira si te suena familiar.
+
+Ocho de la mañana:
+revisa el Excel de ayer
+que alguien actualizó mal.
+
+Nueve:
+responde WhatsApps del equipo
+con preguntas que ya respondió la semana pasada.
+
+Diez y media:
+firma una cotización que estuvo esperando tres días
+porque solo él puede aprobarla.
+
+Doce:
+llama a un proveedor para confirmar un pedido
+que no tiene toda la información.
+
+Dos de la tarde:
+resuelve un problema de recursos humanos
+porque nadie más sabe qué hacer.
+
+Y a las ocho de la noche...
+
+[pausa]
+
+sigue en el despacho.
+
+Todo eso sin avanzar de verdad.
+
+El problema no eres tú.
+Es que tu negocio no tiene sistemas
+para funcionar sin que tú estés en todo.
+
+¿Cuántas de estas hiciste tú hoy?`,
+cta:'¿Cuántas de estas hiciste hoy? Cuéntame en comentarios',
+notaJessica:'La lista de horas se puede decir con ritmo más rápido, como contando. Baja la energía en "Y a las ocho de la noche... sigue en el despacho." — pausa larga antes de "sigue", voz más baja. El cierre con la pregunta — directa a cámara, con una sonrisa cercana.',
+musica:'🎵 Música: _______________'},
+
+{id:'S3-JC2',semana:3,dia:'SÁB 21 Jun',tipo:'Clip',quien:'Junior',urgente:false,
+idea:'#030 — Por qué el software anterior no funcionó. No es culpa tuya.',
+tablero:'Audiencia Avanzada',proposito:'Valor',bateria:'N1',formato:'Clip Rompe el Mito · Texto en pantalla',duracion:'~12 seg',
+ganchoVisual:'Fondo profesional neutro. Texto grande que contradice una creencia común del avatar avanzado.',
+ganchoTextual:'"Me dijeron que si el software falló era porque mi empresa no estaba lista."',
+referencia:'Original',
+guion:`FRAME 1 (0–2s)
+"Me dijeron que si el software falló
+era porque mi empresa no estaba lista."
+
+FRAME 2 (2–3s)
+"Mentira."
+
+FRAME 3 (3–7s)
+"El software falló porque nadie
+entendió cómo funciona tu negocio
+antes de implementarlo."
+
+FRAME 4 (7–10s)
+"Un ERP genérico te pide que adaptes
+tu empresa al software.
+El software correcto se adapta a ti."
+
+FRAME 5 (10–12s) — CTA
+"Guarda esto y compártelo con quien
+esté por contratar software."`,
+cta:'Guarda esto y compártelo con quien esté por contratar software',
+notaJunior:'Frame 2 "Mentira." — en color rojo, grande, solo esa palabra en pantalla un segundo completo. Muy impactante.',
+musica:''},
+
+{id:'S3-JK2',semana:3,dia:'DOM 22 Jun',tipo:'Carrusel',quien:'Junior',urgente:false,
+idea:'#034 — Coopertus: de 15 días consolidando nóminas a cero',
+tablero:'Listo para Comprar',proposito:'Venta',bateria:'N3',formato:'Carrusel Antes/Después · 6 slides',duracion:'—',
+ganchoVisual:'Cover con el contraste: "15 días" vs "0 días". Diseño caso de éxito, limpio y profesional.',
+ganchoTextual:'"15 días al mes consolidando nóminas a mano. Hoy es automático."',
+referencia:'Original',
+guion:`SLIDE 1 — GANCHO (COVER)
+"Coopertus dedicaba 15 días al mes
+a consolidar nóminas a mano.
+Hoy es automático.
+'Queremos probarlo ya.'"
+
+SLIDE 2 — EL ANTES
+15 días al mes.
+Una persona dedicada exclusivamente
+a cruzar datos entre sistemas.
+Errores. Retrasos. La mitad del mes
+consumida en algo que podía automatizarse.
+
+SLIDE 3 — LO QUE HICIMOS
+→ Diagnóstico del proceso de RRHH.
+→ Prototipo funcional sin costo.
+→ Implementación en semanas.
+→ Sin pagar hasta ver el prototipo
+   funcionando.
+
+SLIDE 4 — EL DESPUÉS
+El proceso de nóminas es ahora
+completamente automático.
+La persona que lo hacía a mano
+tiene ahora un rol de más valor.
+15 días liberados cada mes.
+
+SLIDE 5 — LA CITA
+"Queremos probarlo ya."
+— Coopertus, España
+
+SLIDE 6 — CTA
+¿Tienes un proceso así en tu empresa?
+Diagnóstico gratuito → Link en bio`,
+cta:'Diagnóstico gratuito → Link en bio',
+notaJunior:'⚠️ Confirmar datos con Andrés antes de publicar. Diseño tipo case study. El slide 5 con la cita — dale protagonismo visual, tipografía grande.',
+musica:''}
+
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let data = loadData();
+let activeTab = 'all';
+let activeFilters = {};
+let currentDetailId = null;
+let editMode = false;
+let tpPlaying = false;
+let tpRAF = null;
+let tpPos = 0;
+let tpSpeed = 3;
+let tpMode = 'full';
+
+function loadData(){
+  try{
+    const saved = localStorage.getItem('fox_guiones_v2');
+    if(saved) return JSON.parse(saved);
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function saveData(){
+  localStorage.setItem('fox_guiones_v2', JSON.stringify(data));
+  showSavedMsg();
+}
+
+function showSavedMsg(){
+  const m = document.getElementById('savedMsg');
+  if(m){m.classList.add('show');setTimeout(()=>m.classList.remove('show'),2000);}
+}
+
+// ═══════════════════════════════════════════════════════════
+// FILTER + SEARCH
+// ═══════════════════════════════════════════════════════════
+function getFilteredData(){
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  return data.filter(p=>{
+    if(activeTab==='jessica' && p.quien!=='Jessica') return false;
+    if(activeTab==='junior' && p.quien!=='Junior') return false;
+    if(activeTab==='s1' && p.semana!==1) return false;
+    if(activeTab==='s2' && p.semana!==2) return false;
+    if(activeTab==='s3' && p.semana!==3) return false;
+    for(const [k,v] of Object.entries(activeFilters)){
+      if(p[k]!==v) return false;
+    }
+    if(q){
+      const searchable = [p.idea,p.ganchoTextual,p.guion,p.cta].join(' ').toLowerCase();
+      if(!searchable.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function renderAll(){
+  updateStats();
+  const filtered = getFilteredData();
+  const main = document.getElementById('mainContent');
+  if(!filtered.length){
+    main.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No hay piezas</h3><p>Prueba cambiando los filtros o la búsqueda.</p></div>`;
+    return;
+  }
+  // Group by semana
+  const bySemana = {1:[],2:[],3:[]};
+  filtered.forEach(p=>bySemana[p.semana].push(p));
+  const semanaNames = {1:'Semana 1 — Lanzamiento',2:'Semana 2',3:'Semana 3'};
+  const semanaDates = {1:'2 – 8 Jun 2026',2:'9 – 15 Jun 2026',3:'16 – 22 Jun 2026'};
+  let html='';
+  [1,2,3].forEach(s=>{
+    const pieces = bySemana[s];
+    if(!pieces.length) return;
+    html+=`<div class="semana-block">
+      <div class="semana-header">
+        <div>
+          <div class="semana-label">${semanaDates[s]}</div>
+          <div class="semana-title">${semanaNames[s]}</div>
+        </div>
+        <span class="semana-count">${pieces.length} piezas</span>
+      </div>`;
+    // Jessica section
+    const jessica = pieces.filter(p=>p.quien==='Jessica');
+    const junior = pieces.filter(p=>p.quien==='Junior');
+    if(jessica.length){
+      html+=`<div class="jessica-section"><div class="section-label"><span class="section-label-text">🎬 Videos Jessica</span><div class="section-line"></div></div><div class="grid">`;
+      jessica.forEach(p=>html+=renderCard(p));
+      html+=`</div></div>`;
+    }
+    if(junior.length){
+      html+=`<div class="junior-section"><div class="section-label"><span class="section-label-text">🎨 Diseño Junior</span><div class="section-line"></div></div><div class="grid">`;
+      junior.forEach(p=>html+=renderCard(p));
+      html+=`</div></div>`;
+    }
+    html+=`</div>`;
+  });
+  main.innerHTML=html;
+}
+
+function renderCard(p){
+  const tipoBadge = `badge-${p.tipo.toLowerCase()}`;
+  const propBadge = `badge-${p.proposito.toLowerCase()}`;
+  const batBadge = `badge-${p.bateria.toLowerCase()}`;
+  const jesCard = p.quien==='Jessica'?'jessica-card':'junior-card';
+  const urgBadge = p.urgente?`<span class="badge badge-urgente">⚠️ LANZAMIENTO</span>`:'';
+  const tpBtn = p.quien==='Jessica'?`<button class="icon-btn teleprompter-btn" title="Teleprónter" onclick="event.stopPropagation();openTp('${p.id}')">📺</button>`:'';
+  return `<div class="card ${jesCard}" onclick="openDetail('${p.id}')">
+    <div class="card-body">
+      <div class="card-top">
+        <span class="badge ${tipoBadge}">${p.tipo}</span>
+        <span class="badge ${propBadge}">${p.proposito}</span>
+        <span class="badge ${batBadge}">${p.bateria} 🔋</span>
+        ${urgBadge}
+      </div>
+      <div class="card-date">${p.dia}</div>
+      <div class="card-title">${p.idea}</div>
+      <div class="card-hook">${p.ganchoTextual}</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-tablero">${p.tablero}</span>
+      <div class="card-actions">
+        ${tpBtn}
+        <button class="icon-btn" title="Ver detalles" onclick="event.stopPropagation();openDetail('${p.id}')">👁</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function updateStats(){
+  const jessica = data.filter(p=>p.quien==='Jessica').length;
+  const junior = data.filter(p=>p.quien==='Junior').length;
+  document.getElementById('stat-jessica').textContent=jessica;
+  document.getElementById('stat-junior').textContent=junior;
+  document.getElementById('stat-reel').textContent=data.filter(p=>p.tipo==='Reel').length;
+  document.getElementById('stat-clip').textContent=data.filter(p=>p.tipo==='Clip').length;
+  document.getElementById('stat-carrusel').textContent=data.filter(p=>p.tipo==='Carrusel').length;
+  // Update tab counts
+  document.querySelector('[data-tab="all"]').textContent=`Todas (${data.length})`;
+  document.querySelector('[data-tab="jessica"]').textContent=`🎬 Jessica (${jessica})`;
+  document.querySelector('[data-tab="junior"]').textContent=`🎨 Junior (${junior})`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// DETAIL MODAL
+// ═══════════════════════════════════════════════════════════
+function openDetail(id){
+  currentDetailId = id;
+  editMode = false;
+  const p = data.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('dTitle').textContent = p.idea;
+  const propBadge = `badge-${p.proposito.toLowerCase()}`;
+  const tipoBadge = `badge-${p.tipo.toLowerCase()}`;
+  const batBadge = `badge-${p.bateria.toLowerCase()}`;
+  document.getElementById('dTags').innerHTML = `
+    <span class="badge ${tipoBadge}">${p.tipo}</span>
+    <span class="badge badge-${p.quien.toLowerCase()}">${p.quien}</span>
+    <span class="badge ${propBadge}">${p.proposito}</span>
+    <span class="badge ${batBadge}">${p.bateria} 🔋</span>
+    <span class="badge" style="background:#ffffff10;color:var(--text2)">${p.dia}</span>
+    <span class="badge" style="background:#ffffff10;color:var(--text2)">${p.tablero}</span>
+  `;
+  renderDetailBody(p, false);
+  renderDetailFooter(p);
+  document.getElementById('detailModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function renderDetailBody(p, edit){
+  const nota = p.quien==='Jessica' ? p.notaJessica : p.notaJunior;
+  const notaLabel = p.quien==='Jessica' ? '🎤 Nota para Jessica' : '🎨 Nota para Junior';
+  const guionLabel = p.tipo==='Carrusel' ? '🃏 Guion slide a slide' : (p.quien==='Jessica' ? '📝 Guion (Teleprónter)' : '📝 Contenido (frames)');
+  document.getElementById('dBody').innerHTML = `
+    <div class="field">
+      <div class="field-label">👁 Gancho Visual</div>
+      ${edit?`<textarea name="ganchoVisual" rows="2">${esc(p.ganchoVisual)}</textarea>`:`<div class="field-value">${esc(p.ganchoVisual)}</div>`}
+    </div>
+    <div class="field">
+      <div class="field-label">💬 Gancho Textual</div>
+      ${edit?`<textarea name="ganchoTextual" rows="2">${esc(p.ganchoTextual)}</textarea>`:`<div class="field-value">${esc(p.ganchoTextual)}</div>`}
+    </div>
+    <div class="field">
+      <div class="field-label">${guionLabel}</div>
+      ${edit?`<textarea name="guion" rows="18">${esc(p.guion)}</textarea>`:`<div class="field-value guion">${esc(p.guion)}</div>`}
+    </div>
+    <div class="field">
+      <div class="field-label">🎯 CTA</div>
+      ${edit?`<textarea name="cta" rows="2">${esc(p.cta)}</textarea>`:`<div class="field-value">${esc(p.cta)}</div>`}
+    </div>
+    ${nota?`<div class="field">
+      <div class="field-label">${notaLabel}</div>
+      ${edit?`<textarea name="${p.quien==='Jessica'?'notaJessica':'notaJunior'}" rows="3">${esc(nota)}</textarea>`:`<div class="field-value" style="background:#F59E0B10;border-color:#F59E0B30;color:#FCD34D">${esc(nota)}</div>`}
+    </div>`:''}
+    ${p.quien==='Jessica'?`<div class="field">
+      <div class="field-label">🎵 Música</div>
+      <input class="music-input" name="musica" value="${esc(p.musica||'')}" placeholder="Añade el link o nombre de la música aquí...">
+    </div>`:''}
+    ${p.referencia && p.referencia!=='Original'?`<div class="field">
+      <div class="field-label">🔗 Referencia</div>
+      <div class="field-value"><a href="${p.referencia}" target="_blank" class="field-link">${p.referencia}</a></div>
+    </div>`:''}
+    <span class="saved-msg" id="savedMsg">✓ Guardado</span>
+  `;
+}
+
+function renderDetailFooter(p){
+  const tpBtn = p.quien==='Jessica' ? `<button class="btn btn-primary" onclick="openTp('${p.id}')">📺 Teleprónter</button>` : '';
+  document.getElementById('dFooter').innerHTML = `
+    ${tpBtn}
+    <div class="spacer"></div>
+    <button class="btn btn-danger btn-sm" onclick="deletePiece('${p.id}')">🗑 Eliminar</button>
+    <button class="btn btn-ghost btn-sm" id="editToggleBtn" onclick="toggleEdit('${p.id}')">${editMode?'✕ Cancelar':'✏️ Editar'}</button>
+    ${editMode?`<button class="btn btn-primary btn-sm" onclick="saveDetail('${p.id}')">💾 Guardar</button>`:''}
+  `;
+}
+
+function toggleEdit(id){
+  editMode = !editMode;
+  const p = data.find(x=>x.id===id);
+  renderDetailBody(p, editMode);
+  renderDetailFooter(p);
+  if(editMode){
+    // auto-save music input on change
+    const mInput = document.querySelector('.music-input');
+    if(mInput) mInput.addEventListener('input', ()=>{ p.musica = mInput.value; });
+  }
+}
+
+function saveDetail(id){
+  const p = data.find(x=>x.id===id);
+  const body = document.getElementById('dBody');
+  body.querySelectorAll('textarea[name], input[name]').forEach(el=>{
+    p[el.name] = el.value;
+  });
+  editMode = false;
+  renderDetailBody(p, false);
+  renderDetailFooter(p);
+  saveData();
+  renderAll();
+}
+
+function closeDetail(){
+  document.getElementById('detailModal').classList.remove('active');
+  document.body.style.overflow='';
+  editMode=false;
+}
+function closeDetailIfOutside(e){
+  if(e.target===document.getElementById('detailModal')) closeDetail();
+}
+
+function deletePiece(id){
+  if(!confirm('¿Eliminar esta pieza?')) return;
+  data = data.filter(p=>p.id!==id);
+  saveData();
+  closeDetail();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════════
+// TELEPROMPTER
+// ═══════════════════════════════════════════════════════════
+function openTp(id){
+  const p = data.find(x=>x.id===id);
+  if(!p) return;
+  // Parse guion: remove [bracket] notes for clean reading
+  const cleanText = p.guion
+    .replace(/\[Texto en pantalla:[^\]]*\]/gi,'')
+    .replace(/\[[^\]]*\]/g, m=>`<span class="nota">${m}</span>`)
+    .trim();
+  closeDetail();
+  document.getElementById('tpTitle').textContent = p.idea;
+  tpPos = 0;
+  tpPlaying = false;
+  tpSpeed = parseInt(document.getElementById('tpSpeed').value)||3;
+  document.getElementById('tpPlayBtn').textContent = '▶ Iniciar';
+  buildTpContent(cleanText);
+  document.getElementById('tpOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  document.addEventListener('keydown', tpKeyHandler);
+}
+
+function buildTpContent(html){
+  const body = document.getElementById('tpBody');
+  const modeClass = `mode-${tpMode}`;
+  if(tpMode==='full'){
+    body.className=`tp-body mode-full`;
+    body.innerHTML=`<div class="tp-content-wrap"><div class="tp-scroller" id="tpScroller"><div class="tp-text" id="tpText">${html}</div><div class="tp-progress" id="tpProgress" style="width:0%"></div></div></div>`;
+  } else if(tpMode==='ipad'){
+    body.className=`tp-body mode-ipad`;
+    body.innerHTML=`<div class="tp-device-frame"><div class="tp-content-wrap"><div class="tp-scroller" id="tpScroller"><div class="tp-text" id="tpText">${html}</div></div></div></div>`;
+  } else {
+    body.className=`tp-body mode-laptop`;
+    body.innerHTML=`<div class="tp-device-outer"><div class="tp-device-screen"><div class="tp-content-wrap"><div class="tp-scroller" id="tpScroller"><div class="tp-text" id="tpText">${html}</div></div></div></div><div class="tp-device-base"></div></div>`;
+  }
+}
+
+function setTpMode(mode, btn){
+  tpMode = mode;
+  document.querySelectorAll('.tp-device-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cur = document.getElementById('tpText');
+  const html = cur ? cur.innerHTML : '';
+  buildTpContent(html);
+  tpPos = 0;
+}
+
+function toggleTp(){
+  if(tpPlaying) pauseTp(); else playTp();
+}
+
+function playTp(){
+  tpPlaying = true;
+  document.getElementById('tpPlayBtn').textContent = '⏸ Pausar';
+  scrollTp();
+}
+
+function pauseTp(){
+  tpPlaying = false;
+  document.getElementById('tpPlayBtn').textContent = '▶ Continuar';
+  if(tpRAF) cancelAnimationFrame(tpRAF);
+}
+
+function scrollTp(){
+  if(!tpPlaying) return;
+  const scroller = document.getElementById('tpScroller');
+  const text = document.getElementById('tpText');
+  if(!scroller||!text) return;
+  const maxScroll = text.scrollHeight - scroller.clientHeight;
+  if(tpPos >= maxScroll){
+    pauseTp();
+    document.getElementById('tpPlayBtn').textContent = '↺ Reiniciar';
+    document.getElementById('tpPlayBtn').onclick = ()=>{ tpPos=0; scroller.style.transform='translateY(0px)'; document.getElementById('tpPlayBtn').onclick=toggleTp; playTp(); };
+    return;
+  }
+  tpPos += tpSpeed * 0.15;
+  text.style.transform = `translateY(${-tpPos}px)`;
+  const prog = document.getElementById('tpProgress');
+  if(prog) prog.style.width = `${(tpPos/maxScroll)*100}%`;
+  tpRAF = requestAnimationFrame(scrollTp);
+}
+
+function updateSpeed(){
+  tpSpeed = parseInt(document.getElementById('tpSpeed').value)||3;
+  document.getElementById('tpSpeedVal').textContent = tpSpeed;
+}
+
+function closeTp(){
+  pauseTp();
+  document.getElementById('tpOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  document.removeEventListener('keydown', tpKeyHandler);
+}
+
+function tpKeyHandler(e){
+  if(e.key===' '){e.preventDefault();toggleTp();}
+  if(e.key==='Escape') closeTp();
+  if(e.key==='ArrowUp'){tpPos=Math.max(0,tpPos-50);const t=document.getElementById('tpText');if(t)t.style.transform=`translateY(${-tpPos}px)`;}
+  if(e.key==='ArrowDown'){tpPos+=50;const t=document.getElementById('tpText');if(t)t.style.transform=`translateY(${-tpPos}px)`;}
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADD MODAL
+// ═══════════════════════════════════════════════════════════
+function openAddModal(){
+  document.getElementById('addModal').classList.add('active');
+}
+function closeAdd(){
+  document.getElementById('addModal').classList.remove('active');
+}
+function closeAddIfOutside(e){
+  if(e.target===document.getElementById('addModal')) closeAdd();
+}
+function addPiece(){
+  const quien = document.getElementById('fQuien').value;
+  const tipo = document.getElementById('fTipo').value;
+  const semana = parseInt(document.getElementById('fSemana').value);
+  const newId = `S${semana}-CUSTOM-${Date.now()}`;
+  const newPiece = {
+    id: newId, semana, dia: document.getElementById('fDia').value,
+    tipo, quien, urgente: false,
+    idea: document.getElementById('fIdea').value,
+    tablero: document.getElementById('fTablero').value,
+    proposito: document.getElementById('fProposito').value,
+    bateria: document.getElementById('fBateria').value,
+    formato: `${tipo} · Custom`, duracion: document.getElementById('fDuracion').value,
+    ganchoVisual: '', ganchoTextual: document.getElementById('fGanchoT').value,
+    referencia: 'Original', guion: document.getElementById('fGuion').value,
+    cta: document.getElementById('fCta').value,
+    notaJessica: '', notaJunior: '', musica: ''
+  };
+  data.push(newPiece);
+  saveData();
+  closeAdd();
+  renderAll();
+  // Clear form
+  ['fDia','fIdea','fGanchoT','fGuion','fCta','fDuracion'].forEach(id=>{document.getElementById(id).value='';});
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════════════════════
+function exportData(){
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='fox-guiones-backup.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════
+function esc(str){
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════
+document.getElementById('navTabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.nav-tab');
+  if(!btn) return;
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  activeTab = btn.dataset.tab;
+  renderAll();
+});
+
+document.getElementById('filterChips').addEventListener('click', e=>{
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  const {filter, val} = chip.dataset;
+  if(activeFilters[filter]===val){
+    delete activeFilters[filter];
+    chip.classList.remove('active');
+  } else {
+    // Remove other chips for same filter
+    document.querySelectorAll(`.chip[data-filter="${filter}"]`).forEach(c=>c.classList.remove('active'));
+    activeFilters[filter]=val;
+    chip.classList.add('active');
+  }
+  renderAll();
+});
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+renderAll();
+</script>
+</body>
+</html>
