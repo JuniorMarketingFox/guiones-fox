@@ -198,6 +198,25 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 
 /* UTILS */
 .hidden{display:none!important}
+
+/* CALENDAR VIEW */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 12px;flex-wrap:wrap;gap:8px}
+.cal-nav-title{font-size:15px;font-weight:700;color:var(--text)}
+.cal-nav-btns{display:flex;gap:8px}
+.cal-scroll{overflow-x:auto;padding:0 24px 40px}
+.cal-week{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));gap:8px;min-width:910px}
+.cal-day-header{padding:8px 10px 6px;background:var(--surface);border-radius:var(--radius-sm) var(--radius-sm) 0 0;border:1px solid var(--border);border-bottom:none;text-align:center}
+.cal-day-name{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2)}
+.cal-day-num{font-size:22px;font-weight:800;color:var(--text);line-height:1.2}
+.cal-day-num.today{color:var(--accent)}
+.cal-day-body{background:var(--surface2);border:1px solid var(--border);border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:6px;min-height:80px;display:flex;flex-direction:column;gap:5px}
+.cal-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:7px 9px;cursor:pointer;transition:all .15s;border-left:3px solid var(--border)}
+.cal-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,.12)}
+.cal-card.jessica-cal{border-left-color:var(--jessica)}
+.cal-card.junior-cal{border-left-color:var(--junior)}
+.cal-card-tipo{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text2);margin-bottom:2px}
+.cal-card-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cal-empty{font-size:11px;color:var(--text3);text-align:center;padding:14px 4px}
 </style>
 </head>
 <body>
@@ -221,6 +240,8 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <button class="nav-tab" data-tab="s1">Semana 1</button>
   <button class="nav-tab" data-tab="s2">Semana 2</button>
   <button class="nav-tab" data-tab="s3">Semana 3</button>
+  <button class="nav-tab" data-tab="s4">Semana 4</button>
+  <button class="nav-tab" data-tab="cal">📅 Calendario</button>
 </nav>
 
 <!-- TOOLBAR -->
@@ -293,8 +314,8 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <div class="add-modal">
     <h3>➕ Nueva pieza de contenido</h3>
     <div class="form-grid">
-      <div class="form-field"><label>Semana</label><select id="fSemana"><option value="1">Semana 1</option><option value="2">Semana 2</option><option value="3">Semana 3</option></select></div>
-      <div class="form-field"><label>Día / Fecha</label><input type="text" id="fDia" placeholder="LUN 29 Jun"></div>
+      <div class="form-field"><label>Semana</label><select id="fSemana"><option value="1">Semana 1</option><option value="2">Semana 2</option><option value="3">Semana 3</option><option value="4">Semana 4</option></select></div>
+      <div class="form-field"><label>Día / Fecha</label><input type="date" id="fDia"></div>
       <div class="form-field"><label>Tipo</label><select id="fTipo"><option>Reel</option><option>Clip</option><option>Carrusel</option></select></div>
       <div class="form-field"><label>Quién produce</label><select id="fQuien"><option>Jessica</option><option>Junior</option></select></div>
       <div class="form-field full"><label>Título / Idea</label><input type="text" id="fIdea" placeholder="#043 Título del video..."></div>
@@ -1161,6 +1182,7 @@ let tpRAF = null;
 let tpPos = 0;
 let tpSpeed = 3;
 let tpMode = 'full';
+let calWeekOffset = 0;
 
 const DB_URL = 'https://fox-guiones-default-rtdb.firebaseio.com/guiones.json';
 
@@ -1199,6 +1221,7 @@ function getFilteredData(){
     if(activeTab==='s1' && p.semana!==1) return false;
     if(activeTab==='s2' && p.semana!==2) return false;
     if(activeTab==='s3' && p.semana!==3) return false;
+    if(activeTab==='s4' && p.semana!==4) return false;
     for(const [k,v] of Object.entries(activeFilters)){
       if(p[k]!==v) return false;
     }
@@ -1222,12 +1245,12 @@ function renderAll(){
     return;
   }
   // Group by semana
-  const bySemana = {1:[],2:[],3:[]};
-  filtered.forEach(p=>bySemana[p.semana].push(p));
-  const semanaNames = {1:'Semana 1 — Lanzamiento',2:'Semana 2',3:'Semana 3'};
-  const semanaDates = {1:'2 – 8 Jun 2026',2:'9 – 15 Jun 2026',3:'16 – 22 Jun 2026'};
+  const bySemana = {1:[],2:[],3:[],4:[]};
+  filtered.forEach(p=>{ if(bySemana[p.semana]) bySemana[p.semana].push(p); });
+  const semanaNames = {1:'Semana 1 — Lanzamiento',2:'Semana 2',3:'Semana 3',4:'Semana 4'};
+  const semanaDates = {1:'2 – 8 Jun 2026',2:'9 – 15 Jun 2026',3:'16 – 22 Jun 2026',4:'23 – 29 Jun 2026'};
   let html='';
-  [1,2,3].forEach(s=>{
+  [1,2,3,4].forEach(s=>{
     const pieces = bySemana[s];
     if(!pieces.length) return;
     html+=`<div class="semana-block">
@@ -1535,7 +1558,7 @@ function addPiece(){
   const semana = parseInt(document.getElementById('fSemana').value);
   const newId = `S${semana}-CUSTOM-${Date.now()}`;
   const newPiece = {
-    id: newId, semana, dia: document.getElementById('fDia').value,
+    id: newId, semana, dia: formatDia(document.getElementById('fDia').value), fechaISO: document.getElementById('fDia').value,
     tipo, quien, urgente: false,
     idea: document.getElementById('fIdea').value,
     tablero: document.getElementById('fTablero').value,
@@ -1574,6 +1597,94 @@ function esc(str){
 }
 
 // ═══════════════════════════════════════════════════════════
+// DATE UTILS
+// ═══════════════════════════════════════════════════════════
+function formatDia(isoStr){
+  if(!isoStr) return '';
+  const [y,m,d] = isoStr.split('-').map(Number);
+  const date = new Date(y, m-1, d, 12);
+  const dias = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return `${dias[date.getDay()]} ${d} ${meses[m-1]}`;
+}
+
+function parseDia(p){
+  if(p.fechaISO) return new Date(p.fechaISO + 'T12:00:00');
+  if(!p.dia) return null;
+  const meses = {Ene:0,Feb:1,Mar:2,Abr:3,May:4,Jun:5,Jul:6,Ago:7,Sep:8,Oct:9,Nov:10,Dic:11};
+  const parts = p.dia.trim().split(/\s+/);
+  if(parts.length < 3) return null;
+  const day = parseInt(parts[1]);
+  const mon = meses[parts[2]];
+  if(isNaN(day) || mon === undefined) return null;
+  return new Date(2026, mon, day, 12, 0, 0);
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALENDAR
+// ═══════════════════════════════════════════════════════════
+function getCalWeekStart(){
+  const base = new Date();
+  base.setHours(0,0,0,0);
+  const day = base.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  base.setDate(base.getDate() + diff + calWeekOffset * 7);
+  return base;
+}
+
+function renderCalendar(){
+  const weekStart = getCalWeekStart();
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 6);
+  const dayNames = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  const mesesFull = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const today = new Date(); today.setHours(0,0,0,0);
+  const fmtMonth = (d) => d.getMonth()===weekEnd.getMonth() ? '' : `${mesesFull[d.getMonth()]} `;
+  const title = `${weekStart.getDate()} ${mesesFull[weekStart.getMonth()]} – ${weekEnd.getDate()} ${mesesFull[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
+  let html = `<div class="cal-nav">
+    <div class="cal-nav-title">📅 ${title}</div>
+    <div class="cal-nav-btns">
+      <button class="btn btn-ghost btn-sm" onclick="calWeekOffset--;renderCalendar()">← Anterior</button>
+      <button class="btn btn-ghost btn-sm" onclick="calWeekOffset=0;renderCalendar()">Hoy</button>
+      <button class="btn btn-ghost btn-sm" onclick="calWeekOffset++;renderCalendar()">Siguiente →</button>
+    </div>
+  </div>
+  <div class="cal-scroll"><div class="cal-week">`;
+  for(let i=0;i<7;i++){
+    const day = new Date(weekStart);
+    day.setDate(day.getDate() + i);
+    day.setHours(0,0,0,0);
+    const isToday = day.getTime() === today.getTime();
+    const dayPieces = data.filter(p=>{
+      const pd = parseDia(p);
+      if(!pd) return false;
+      const c = new Date(pd); c.setHours(0,0,0,0);
+      return c.getTime() === day.getTime();
+    });
+    html += `<div class="cal-day">
+      <div class="cal-day-header">
+        <div class="cal-day-name">${dayNames[i]}</div>
+        <div class="cal-day-num${isToday?' today':''}">${day.getDate()}</div>
+      </div>
+      <div class="cal-day-body">`;
+    if(!dayPieces.length){
+      html += `<div class="cal-empty">—</div>`;
+    } else {
+      dayPieces.forEach(p=>{
+        const calClass = p.quien==='Jessica' ? 'jessica-cal' : 'junior-cal';
+        html += `<div class="cal-card ${calClass}" onclick="openDetail('${p.id}')">
+          <div class="cal-card-tipo">${p.tipo} · ${p.quien}</div>
+          <div class="cal-card-title">${esc(p.idea)}</div>
+        </div>`;
+      });
+    }
+    html += `</div></div>`;
+  }
+  html += `</div></div>`;
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
 // EVENTS
 // ═══════════════════════════════════════════════════════════
 document.getElementById('navTabs').addEventListener('click', e=>{
@@ -1582,7 +1693,7 @@ document.getElementById('navTabs').addEventListener('click', e=>{
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   activeTab = btn.dataset.tab;
-  renderAll();
+  if(activeTab==='cal') renderCalendar(); else renderAll();
 });
 
 document.getElementById('filterChips').addEventListener('click', e=>{
