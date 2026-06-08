@@ -217,6 +217,22 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .cal-card-tipo{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text2);margin-bottom:2px}
 .cal-card-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .cal-empty{font-size:11px;color:var(--text3);text-align:center;padding:14px 4px}
+/* day header with + button */
+.cal-day-header{position:relative}
+.cal-add-btn{position:absolute;top:6px;right:6px;width:20px;height:20px;border:none;border-radius:6px;background:var(--surface2);color:var(--text2);font-size:15px;font-weight:700;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:all .15s}
+.cal-day:hover .cal-add-btn{opacity:1}
+.cal-add-btn:hover{background:var(--accent);color:#fff}
+/* weekend = Libre */
+.cal-day-header.weekend{background:var(--surface);opacity:.55}
+.cal-day-header.weekend .cal-day-name,.cal-day-header.weekend .cal-day-num{color:var(--text3)}
+.cal-day-body.weekend{background:repeating-linear-gradient(135deg,var(--bg),var(--bg) 6px,var(--surface2) 6px,var(--surface2) 7px);min-height:80px}
+.cal-libre{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);text-align:center;padding:20px 4px;display:flex;flex-direction:column;gap:3px}
+.cal-libre span{font-size:9px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--text3);opacity:.7}
+/* drag & drop */
+.cal-card{cursor:grab}
+.cal-card:active{cursor:grabbing}
+.cal-card.dragging{opacity:.4;transform:scale(.97)}
+.cal-day-body.drop-over{background:var(--accent);background:#6366F118;border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
 </style>
 </head>
 <body>
@@ -226,7 +242,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <div class="header-logo">FOX</div>
   <div class="header-title">
     <h1>Guiones · Junio 2026</h1>
-    <p>21 piezas · 3 semanas · Lanzamiento 2 junio</p>
+    <p>21 piezas · 5 semanas (Lun–Vie) · Lanzamiento 2 junio</p>
   </div>
   <button class="btn btn-ghost btn-sm" onclick="exportData()">⬇ Exportar</button>
   <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Añadir pieza</button>
@@ -241,6 +257,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <button class="nav-tab" data-tab="s2">Semana 2</button>
   <button class="nav-tab" data-tab="s3">Semana 3</button>
   <button class="nav-tab" data-tab="s4">Semana 4</button>
+  <button class="nav-tab" data-tab="s5">Semana 5</button>
   <button class="nav-tab" data-tab="cal">📅 Calendario</button>
 </nav>
 
@@ -314,7 +331,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <div class="add-modal">
     <h3>➕ Nueva pieza de contenido</h3>
     <div class="form-grid">
-      <div class="form-field"><label>Semana</label><select id="fSemana"><option value="1">Semana 1</option><option value="2">Semana 2</option><option value="3">Semana 3</option><option value="4">Semana 4</option></select></div>
+      <div class="form-field"><label>Semana</label><select id="fSemana"><option value="1">Semana 1</option><option value="2">Semana 2</option><option value="3">Semana 3</option><option value="4">Semana 4</option><option value="5">Semana 5</option></select></div>
       <div class="form-field"><label>Día / Fecha</label><input type="date" id="fDia"></div>
       <div class="form-field"><label>Tipo</label><select id="fTipo"><option>Reel</option><option>Clip</option><option>Carrusel</option></select></div>
       <div class="form-field"><label>Quién produce</label><select id="fQuien"><option>Jessica</option><option>Junior</option></select></div>
@@ -1222,6 +1239,7 @@ function getFilteredData(){
     if(activeTab==='s2' && p.semana!==2) return false;
     if(activeTab==='s3' && p.semana!==3) return false;
     if(activeTab==='s4' && p.semana!==4) return false;
+    if(activeTab==='s5' && p.semana!==5) return false;
     for(const [k,v] of Object.entries(activeFilters)){
       if(p[k]!==v) return false;
     }
@@ -1244,20 +1262,20 @@ function renderAll(){
     main.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No hay piezas</h3><p>Prueba cambiando los filtros o la búsqueda.</p></div>`;
     return;
   }
-  // Group by semana
-  const bySemana = {1:[],2:[],3:[],4:[]};
-  filtered.forEach(p=>{ if(bySemana[p.semana]) bySemana[p.semana].push(p); });
-  const semanaNames = {1:'Semana 1 — Lanzamiento',2:'Semana 2',3:'Semana 3',4:'Semana 4'};
-  const semanaDates = {1:'2 – 8 Jun 2026',2:'9 – 15 Jun 2026',3:'16 – 22 Jun 2026',4:'23 – 29 Jun 2026'};
+  // Group by semana (dynamic — supports any number of weeks)
+  const bySemana = {};
+  filtered.forEach(p=>{ const s=p.semana||1; (bySemana[s]=bySemana[s]||[]).push(p); });
+  const semanas = Object.keys(bySemana).map(Number).sort((a,b)=>a-b);
   let html='';
-  [1,2,3,4].forEach(s=>{
+  semanas.forEach(s=>{
     const pieces = bySemana[s];
     if(!pieces.length) return;
+    const info = semanaInfo(s);
     html+=`<div class="semana-block">
       <div class="semana-header">
         <div>
-          <div class="semana-label">${semanaDates[s]}</div>
-          <div class="semana-title">${semanaNames[s]}</div>
+          <div class="semana-label">${info.dates}</div>
+          <div class="semana-title">${info.name}</div>
         </div>
         <span class="semana-count">${pieces.length} piezas</span>
       </div>`;
@@ -1543,7 +1561,13 @@ function tpKeyHandler(e){
 // ═══════════════════════════════════════════════════════════
 // ADD MODAL
 // ═══════════════════════════════════════════════════════════
-function openAddModal(){
+function openAddModal(iso){
+  if(typeof iso==='string' && iso){
+    document.getElementById('fDia').value = iso;
+    const s = semanaFromDate(new Date(iso+'T12:00:00'));
+    const sel = document.getElementById('fSemana');
+    if([...sel.options].some(o=>o.value===String(s))) sel.value = String(s);
+  }
   document.getElementById('addModal').classList.add('active');
 }
 function closeAdd(){
@@ -1555,10 +1579,11 @@ function closeAddIfOutside(e){
 function addPiece(){
   const quien = document.getElementById('fQuien').value;
   const tipo = document.getElementById('fTipo').value;
-  const semana = parseInt(document.getElementById('fSemana').value);
+  const fDiaVal = document.getElementById('fDia').value;
+  const semana = fDiaVal ? semanaFromDate(new Date(fDiaVal+'T12:00:00')) : parseInt(document.getElementById('fSemana').value);
   const newId = `S${semana}-CUSTOM-${Date.now()}`;
   const newPiece = {
-    id: newId, semana, dia: formatDia(document.getElementById('fDia').value), fechaISO: document.getElementById('fDia').value,
+    id: newId, semana, dia: formatDia(fDiaVal), fechaISO: fDiaVal,
     tipo, quien, urgente: false,
     idea: document.getElementById('fIdea').value,
     tablero: document.getElementById('fTablero').value,
@@ -1620,6 +1645,58 @@ function parseDia(p){
   return new Date(2026, mon, day, 12, 0, 0);
 }
 
+// Project anchor: Monday 1 Jun 2026 = Semana 1
+const WEEK1_MONDAY = new Date(2026,5,1,12,0,0);
+const MESES_ABR = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+// Returns the semana number (1-based) for a given Date, Monday-anchored
+function semanaFromDate(dt){
+  const d = new Date(dt); d.setHours(12,0,0,0);
+  const dow = (d.getDay()+6)%7; // 0=Mon … 6=Sun
+  const monday = new Date(d); monday.setDate(d.getDate()-dow);
+  const diffWeeks = Math.round((monday - WEEK1_MONDAY)/(7*86400000));
+  return Math.max(1, diffWeeks + 1);
+}
+
+// Returns {name, dates} for a semana number (working range Lun–Vie)
+function semanaInfo(s){
+  const mon = new Date(WEEK1_MONDAY); mon.setDate(mon.getDate()+(s-1)*7);
+  const fri = new Date(mon); fri.setDate(mon.getDate()+4);
+  const dates = `${mon.getDate()} – ${fri.getDate()} ${MESES_ABR[fri.getMonth()]} ${fri.getFullYear()} · Lun–Vie`;
+  const name = s===1 ? 'Semana 1 — Lanzamiento' : `Semana ${s}`;
+  return {name, dates};
+}
+
+// Fallback-only: repack pieces onto weekdays (Lun–Vie), preserving order. Idempotent.
+function normalizeWeekdays(arr){
+  const dias=['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+  const sorted=[...arr].sort((a,b)=>{
+    const da=parseDia(a), db=parseDia(b);
+    return (da?da.getTime():0)-(db?db.getTime():0);
+  });
+  let cur=parseDia(sorted[0])||new Date(2026,5,2,12,0,0);
+  cur=new Date(cur); cur.setHours(12,0,0,0);
+  sorted.forEach(p=>{
+    while(cur.getDay()===0||cur.getDay()===6){ cur.setDate(cur.getDate()+1); }
+    p.fechaISO=`${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`;
+    p.dia=`${dias[cur.getDay()]} ${cur.getDate()} ${MESES_ABR[cur.getMonth()]}`;
+    p.semana=semanaFromDate(cur);
+    cur.setDate(cur.getDate()+1);
+  });
+  return arr;
+}
+
+// Reassign a piece to a specific ISO date (used by drag&drop)
+function movePieceToDate(id, isoDate){
+  const p = data.find(x=>x.id===id);
+  if(!p) return;
+  p.fechaISO = isoDate;
+  p.dia = formatDia(isoDate);
+  p.semana = semanaFromDate(new Date(isoDate+'T12:00:00'));
+  saveData();
+  renderCalendar();
+}
+
 // ═══════════════════════════════════════════════════════════
 // CALENDAR
 // ═══════════════════════════════════════════════════════════
@@ -1655,24 +1732,31 @@ function renderCalendar(){
     day.setDate(day.getDate() + i);
     day.setHours(0,0,0,0);
     const isToday = day.getTime() === today.getTime();
+    const isWeekend = (i>=5); // 5=Sáb, 6=Dom (cal-week empieza en Lunes)
+    const iso = `${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;
     const dayPieces = data.filter(p=>{
       const pd = parseDia(p);
       if(!pd) return false;
       const c = new Date(pd); c.setHours(0,0,0,0);
       return c.getTime() === day.getTime();
     });
-    html += `<div class="cal-day">
-      <div class="cal-day-header">
+    const addBtn = isWeekend ? '' : `<button class="cal-add-btn" title="Añadir contenido este día" onclick="event.stopPropagation();openAddModal('${iso}')">+</button>`;
+    const dropAttrs = isWeekend ? '' : `ondragover="calDragOver(event)" ondragleave="calDragLeave(event)" ondrop="calDrop(event,'${iso}')"`;
+    html += `<div class="cal-day${isWeekend?' cal-day-weekend':''}">
+      <div class="cal-day-header${isWeekend?' weekend':''}">
         <div class="cal-day-name">${dayNames[i]}</div>
         <div class="cal-day-num${isToday?' today':''}">${day.getDate()}</div>
+        ${addBtn}
       </div>
-      <div class="cal-day-body">`;
-    if(!dayPieces.length){
+      <div class="cal-day-body${isWeekend?' weekend':''}" ${dropAttrs} data-iso="${iso}">`;
+    if(isWeekend){
+      html += `<div class="cal-libre">Libre<span>sin publicación</span></div>`;
+    } else if(!dayPieces.length){
       html += `<div class="cal-empty">—</div>`;
     } else {
       dayPieces.forEach(p=>{
         const calClass = p.quien==='Jessica' ? 'jessica-cal' : 'junior-cal';
-        html += `<div class="cal-card ${calClass}" onclick="openDetail('${p.id}')">
+        html += `<div class="cal-card ${calClass}" draggable="true" data-id="${p.id}" ondragstart="calDragStart(event,'${p.id}')" ondragend="calDragEnd(event)" onclick="openDetail('${p.id}')">
           <div class="cal-card-tipo">${p.tipo} · ${p.quien}</div>
           <div class="cal-card-title">${esc(p.idea)}</div>
         </div>`;
@@ -1682,6 +1766,36 @@ function renderCalendar(){
   }
   html += `</div></div>`;
   document.getElementById('mainContent').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// DRAG & DROP (calendario tipo Trello)
+// ═══════════════════════════════════════════════════════════
+let dragId = null;
+function calDragStart(e, id){
+  dragId = id;
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain', id);
+  e.currentTarget.classList.add('dragging');
+}
+function calDragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.cal-day-body.drop-over').forEach(el=>el.classList.remove('drop-over'));
+  dragId = null;
+}
+function calDragOver(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect='move';
+  e.currentTarget.classList.add('drop-over');
+}
+function calDragLeave(e){
+  e.currentTarget.classList.remove('drop-over');
+}
+function calDrop(e, iso){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drop-over');
+  const id = dragId || e.dataTransfer.getData('text/plain');
+  if(id) movePieceToDate(id, iso);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1718,7 +1832,7 @@ document.getElementById('filterChips').addEventListener('click', e=>{
 (async()=>{
   document.getElementById('mainContent').innerHTML='<div class="empty"><div class="empty-icon">⏳</div><h3>Cargando guiones...</h3></div>';
   const loaded = await loadFromDB();
-  data = loaded || JSON.parse(JSON.stringify(DEFAULT_DATA));
+  data = loaded || normalizeWeekdays(JSON.parse(JSON.stringify(DEFAULT_DATA)));
   renderAll();
 })();
 </script>
